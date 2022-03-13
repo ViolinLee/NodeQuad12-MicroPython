@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NodeQuad</title>
+</head>
+
+<div style="text-align: center;"><h1>NodeQuad</h1></div><br>
+
+<style>
+    #container {
+        width: 100%;
+        height: 49vh;
+        background-color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 7px;
+        touch-action: none;
+    }
+
+    #item {
+        width: 100px;
+        height: 100px;
+        background-color: rgb(245, 230, 99);
+        border: 10px solid rgba(136, 136, 136, .5);
+        border-radius: 50%;
+        touch-action: none;
+        user-select: none;
+    }
+
+    #item:active {
+        background-color: rgba(168, 218, 220, 1.00);
+    }
+
+    #item:hover {
+        cursor: pointer;
+        border-width: 20px;
+    }
+
+    #area {
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
+</style>
+
+<style>
+    *
+    {
+        box-sizing: border-box;
+    }
+    body
+    {
+        margin: 0px;
+        padding: 0px;
+        font-family: monospace;
+    }
+    .row
+    {
+        display: inline-flex;
+        clear: both;
+    }
+    .columnLateral
+    {
+      float: left;
+      width: 15%;
+      min-width: 300px;
+    }
+    .columnCetral
+    {
+      float: left;
+      width: 70%;
+      min-width: 300px;
+    }
+    #joy2Div
+    {
+        width:200px;
+        height:200px;
+        margin:50px
+    }
+
+</style>
+
+<style>
+.button {
+    color: white;
+    text-align: center;
+    padding: 2px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 1px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 78px;
+    height: 55px;
+}
+.red {background-color: #F00;}
+.green {background-color: #090;}
+.yellow {background-color:#F90;}
+.blue {background-color:#03C;}
+</style>
+
+<script type="text/javascript">
+    var JoyStick = function (t, e) { var i = void 0 === (e = e || {}).title ? "joystick" : e.title, n = void 0 === e.width ? 0 : e.width, o = void 0 === e.height ? 0 : e.height, h = void 0 === e.internalFillColor ? "#00AA00" : e.internalFillColor, r = void 0 === e.internalLineWidth ? 2 : e.internalLineWidth, d = void 0 === e.internalStrokeColor ? "#003300" : e.internalStrokeColor, a = void 0 === e.externalLineWidth ? 2 : e.externalLineWidth, l = void 0 === e.externalStrokeColor ? "#008000" : e.externalStrokeColor, c = document.getElementById(t), u = document.createElement("canvas"); u.id = i, 0 == n && (n = c.clientWidth), 0 == o && (o = c.clientHeight), u.width = n, u.height = o, c.appendChild(u); var s = u.getContext("2d"), f = 0, v = 2 * Math.PI, g = (u.width - 110) / 2, w = g + 5, C = g + 30, m = u.width / 2, p = u.height / 2, L = u.width / 10, E = -1 * L, S = u.height / 10, k = -1 * S, W = m, G = p; function x() { s.beginPath(), s.arc(m, p, C, 0, v, !1), s.lineWidth = a, s.strokeStyle = l, s.stroke() } function y() { s.beginPath(), W < g && (W = w), W + g > u.width && (W = u.width - w), G < g && (G = w), G + g > u.height && (G = u.height - w), s.arc(W, G, g, 0, v, !1); var t = s.createRadialGradient(m, p, 5, m, p, 200); t.addColorStop(0, h), t.addColorStop(1, d), s.fillStyle = t, s.fill(), s.lineWidth = r, s.strokeStyle = d, s.stroke() } "ontouchstart" in document.documentElement ? (u.addEventListener("touchstart", function (t) { f = 1 }, !1), u.addEventListener("touchmove", function (t) { t.preventDefault(), 1 == f && (W = t.touches[0].pageX, G = t.touches[0].pageY, W -= u.offsetLeft, G -= u.offsetTop, s.clearRect(0, 0, u.width, u.height), x(), y()) }, !1), u.addEventListener("touchend", function (t) { f = 0, W = m, G = p, s.clearRect(0, 0, u.width, u.height), x(), y() }, !1)) : (u.addEventListener("mousedown", function (t) { f = 1 }, !1), u.addEventListener("mousemove", function (t) { 1 == f && (W = t.pageX, G = t.pageY, W -= u.offsetLeft, G -= u.offsetTop, s.clearRect(0, 0, u.width, u.height), x(), y()) }, !1), u.addEventListener("mouseup", function (t) { f = 0, W = m, G = p, s.clearRect(0, 0, u.width, u.height), x(), y() }, !1)), x(), y(), this.GetWidth = function () { return u.width }, this.GetHeight = function () { return u.height }, this.GetPosX = function () { return W }, this.GetPosY = function () { return G }, this.GetX = function () { return Math.round((W - m) / w * 100) }, this.GetY = function () { return Math.round((G - p) / w * 100 * -1) }, this.GetDir = function () { var t = "", e = W - m, i = G - p; return i >= k && i <= S && (t = "C"), i < k && (t = "N"), i > S && (t = "S"), e < E && ("C" == t ? t = "W" : t += "W"), e > L && ("C" == t ? t = "E" : t += "E"), t } };
+</script>
+
+<script language="javascript">
+  function buttonclick(e) {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("POST", '/', true);
+      xmlhttp.setRequestHeader("Content-Type", "application/json");
+      var params={'button': e.id}; 
+      xmlhttp.send(JSON.stringify(params));
+  }
+</script>
+
+<script language="javascript">
+  function dimSeth(evt) {
+      let me3;
+      const xmlhttp = new XMLHttpRequest();
+      me3 = evt.target;
+      xmlhttp.open("GET","height=" + me3.value,true); xmlhttp.send()
+  }
+</script>
+
+<body>
+<center><span align="center" style="text-align: center; display: inline-block;padding: 5px; font-size: 120%;font-weight: bold;"><a style="width:200px; height:50px;" href="/calibration_page">
+    <button id="CALIBRATEPAGE" type="button" onclick="buttonclick(this);" style="width:200px; height: 30px; Text-align: center;">Calibration: Start | Save</button></a></span></center><br>
+
+  <center><form><span>
+    <span align="center" style="display:inline-block;border-radius:5px;padding:5px;border:1px solid #fc0; font-size: 120%;font-weight: bold;">
+      <p>Operation Mode</p>
+      <button id="MOVE" type="button" onclick="buttonclick(this);" style="width:70px; height:30px; Text-align:center;"> Move </button>
+      <button id="POSE" type="button" onclick="buttonclick(this);" style="width:70px; height:30px;"> Pose </button>
+    </span>
+    <span align="center" style="display:inline-block;border-radius:5px;padding:5px;border:1px solid #fc0; font-size: 120%;font-weight: bold;">
+        <p>Quadruped Gait Mode</p>
+        <button id="TROT" type="button" onclick="buttonclick(this);" style="width:70px; height:30px; Text-align:center;"> Trot </button>
+        <button id="WALK" type="button" onclick="buttonclick(this);" style="width:70px; height:30px;"> Walk </button>
+        <button id="GALLOP" type="button" onclick="buttonclick(this);" style="width:70px; height:30px;"> Gallop </button>
+        <button id="CREEP" type="button" onclick="buttonclick(this);" style="width:70px; height:30px;"> Creep </button>
+    </span>
+    </span></form></center><br> 
+
+
+<center><div class="row">
+    <span align="center" style="display:inline-block; font-size: 120%;font-weight: bold;">
+        <table width="100" height="200" border="0" align="center">
+            <tr>
+              <td align="center" valign="middle"><form name="form1" method="post" action="">
+                <label>
+                  <button id="LEFTTURN" type="button" onclick="buttonclick(this);" class="button blue">Turn-L</button> 
+                </label>
+              </form></td>
+              <td align="center" valign="middle"><form name="form1" method="post" action="">
+                <label>
+                  <button id="FORWARD" type="button" onclick="buttonclick(this);" class="button green">Forward</button> 
+                </label>
+              </form></td>
+              <td align="center" valign="middle"><form name="form1" method="post" action="">
+                <label>
+                  <button id="RIGHTTURN" type="button" onclick="buttonclick(this);" class="button blue">Turn-R</button> 
+                </label>
+              </form></td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle"><form name="form1" method="post" action="">
+                <label>
+                  <button id="LEFTSHIFT" type="button" onclick="buttonclick(this);" class="button green">Shift-L</button> 
+                </label>
+              </form></td>
+              <td align="center" valign="middle"><form name="form1" method="post" action="">
+                <label>
+                  <button id="STANDBY" type="button" onclick="buttonclick(this);" class="button red">Stand</button> 
+                </label>
+              </form></td>
+              <td align="center" valign="middle"><form name="form1" method="post" action="">
+                <label>
+                  <button id="RIGHTSHIFT" type="button" onclick="buttonclick(this);" class="button green">Shift-R</button> 
+                </label>
+              </form></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td align="center" valign="middle"><form name="form1" method="post" action="">
+                <label>
+                  <button id="BACKWARD" type="button" onclick="buttonclick(this);" class="button green">Backward</button> 
+                </label>
+              </form></td>
+              <td>&nbsp;</td>
+            </tr>
+        </table>
+    </span>
+    
+    <td>&nbsp;</td>
+
+    <div id="joyDiv" style="width:200px;height:200px;margin:auto;"></div>
+</div></center>
+
+
+
+</body>
+
+<script type="text/javascript">
+    // Create JoyStick object into the DIV 'joyDiv'
+    var joy = new JoyStick('joyDiv');
+    var inputPosX = document.getElementById("posizioneX");
+    var inputPosY = document.getElementById("posizioneY");
+    var direzione = document.getElementById("direzione");
+    var fuerzaI = document.getElementById("fuerzaI");
+    var fuerzaD = document.getElementById("fuerzaD");
+    var x = document.getElementById("X");
+    var y = document.getElementById("Y");
+    
+    var xmlhttp = new XMLHttpRequest();
+    setInterval(function(){xmlhttp.open("POST", '/', true);xmlhttp.setRequestHeader("Content-Type", "application/json");var params={'joy.x': joy.GetX(), 'joy.y': joy.GetY()}; xmlhttp.send(JSON.stringify(params));}, 200);
+
+</script>
+
+</html>
+
+
+
