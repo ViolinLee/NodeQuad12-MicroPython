@@ -21,6 +21,7 @@ Screw | M2 * 45mm | 8 | Body Base & Body Top: 2 x 4
 Screw | M2.5 * 8mm | 48 | Servo Mounting: 4 x 12
 Screw | M2.5 * 20mm | 8 | Tiabia Rod: 4 x 2
 Screw | M3 * 65mm | 8 | Femur: 2 x 4
+Screw | M3 * 10mm | 4 | Tip: 1 x 4
 Screw | M3 * 12mm | 12 | Joint Axis: 1 x 12
 Nuts | M2 | 8 | Body Base & Body Top: 2 x 4
 Nuts (self-locking) | M3 | 12 | Joint Axis: 1 x 12 
