@@ -31,6 +31,7 @@ pin_green = 25
 low_voltage = 10.2  # each of 3.4V
 
 # WIFI config
+wlan_sta = False
 wifissid = 'LeeSophia'
 wifipass = '******'
 

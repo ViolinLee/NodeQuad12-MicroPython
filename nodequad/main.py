@@ -1,7 +1,7 @@
 import _thread
 from utime import sleep_ms
 from machine import I2C, ADC, Pin, Timer
-from network import WLAN, STA_IF
+from network import WLAN, STA_IF, AP_IF
 from nodequad import NodeQuad
 from setting import *
 from utils import battery_monitor_loop
@@ -9,17 +9,27 @@ from utils import battery_monitor_loop
 
 if __name__ == '__main__':
     # Connect to WIFI
-    wifi = WLAN(STA_IF)
-    wifi.active(True)
-    wifi.connect(wifissid, wifipass)
-    while not wifi.isconnected():
-        pass
-    sta_ip = wifi.ifconfig()[0]
-    print("Listening, connect your browser to %s" % sta_ip)
+    if wlan_sta:
+        wifi = WLAN(STA_IF)
+        wifi.active(True)
+        wifi.connect(wifissid, wifipass)
+        while not wifi.isconnected():
+            pass
+        wlan_ip = wifi.ifconfig()[0]
+    else:
+        ap = WLAN(AP_IF)
+        ap.active(True)
+        ap.config(essid="nodequad", password="666888999")
+        ap.config(authmode=3)
+        while ap.active() == False:
+            pass
+        wlan_ip = ap.ifconfig()[0]
+
+    print("Listening, connect your browser to %s" % wlan_ip)
 
     # Quadruped Initialization
     iic = I2C(scl=Pin(pca_i2c_scl), sda=Pin(pca_i2c_sda), freq=pca_i2c_freq)
-    quadruped = NodeQuad(sta_ip, iic, pca_i2c_adr, pulse_min, pulse_max, pulse_freq)
+    quadruped = NodeQuad(wlan_ip, iic, pca_i2c_adr, pulse_min, pulse_max, pulse_freq)
     quadruped.init()
     sleep_ms(500)
     
@@ -37,6 +47,8 @@ if __name__ == '__main__':
     # PyDog mainloop
     quadruped.main_loop()
     print("************Welcome to NodeQuad!************")
+
+
 
 
 
