@@ -38,6 +38,7 @@ Bearing | 624ZZ | 8 | Femur & Tiabia: 4 + 4
 [YouTube: Open Source 3D-printed Spider Quadruped robot using ESP32 and MicroPython](https://www.youtube.com/watch?v=OmWLzTs7Svc)   
 
 ## Others   
+- ![BOM表](resource/BOM.xlsx)参考。
 
 - 若有朋友需要3D打印结构件或其他相关配件，可以猛击[**淘宝链接**](https://item.taobao.com/item.htm?spm=a230r.1.14.6.2ea92ccdscMUVQ&id=668514867195&ns=1&abbucket=3#detail)。   
 - 业余时间捣鼓开源项目不易，望大家多多Star以支持！   
